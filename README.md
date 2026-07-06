@@ -4,7 +4,7 @@ A deep learning project that predicts future stock prices using LSTM neural netw
 
 ## Project Structure
 
-- backend/ – Python code for data fetching, preprocessing, and model training
+- backend/ – Python code for data fetching, preprocessing, model training, and prediction API
 
 ## How It Works
 
@@ -12,6 +12,7 @@ A deep learning project that predicts future stock prices using LSTM neural netw
 2. Preprocess the data: scale prices and create sliding windows (60 days to predict the next 10 days).
 3. Train an LSTM neural network on the patterns.
 4. Save the trained model to make future predictions.
+5. Serve predictions via a FastAPI endpoint (`/predict`).
 
 ## How to Run
 
@@ -28,6 +29,11 @@ A deep learning project that predicts future stock prices using LSTM neural netw
 4. Train the LSTM model:
    python train_model.py
 
+5. Run the prediction API:
+   python predict.py
+
+The API will be available at `http://localhost:8000/docs`.
+
 ## Files Generated
 
 - `scaler.pkl` – Saves the normalization parameters.
@@ -40,4 +46,4 @@ A deep learning project that predicts future stock prices using LSTM neural netw
 - Scikit-Learn (MinMaxScaler)
 - TensorFlow / Keras (LSTM)
 - FastAPI (for serving predictions)
-- React (for the dashboard)
+- React (for the dashboard, coming soon)
