@@ -6,11 +6,20 @@ from tensorflow.keras.models import load_model
 from fastapi import FastAPI,HTTPException
 from pydantic import BaseModel
 import uvicorn
+from fastapi.middleware.cors import CORSMiddleware
 
 model=load_model('stock_model.h5',compile=False)
 scaler=joblib.load('scaler.pkl')
 
 app=FastAPI(title="stock Predictor AI")
+
+app.add_middleware(
+  CORSMiddleware,
+  allow_origins=["http://localhost:5173"],
+  allow_credentials=True,
+  allow_methods=['*'],
+  allow_headers=['*']
+)
 
 class TickerRequest(BaseModel):
   ticker:str
