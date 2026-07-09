@@ -10,6 +10,8 @@ import {
   XAxis, YAxis
 } from 'recharts';
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+
 function App() {
   const [ticker, setTicker] = useState('');
   const [prediction, setPrediction] = useState(null);
@@ -19,26 +21,25 @@ function App() {
   const popularTickers = ['AAPL', 'MSFT', 'GOOGL', 'AMZN', 'TSLA', 'NVDA', 'META', 'NFLX'];
 
   const handlePredict = async () => {
-    if (!ticker) return;
-    setLoading(true);
-    setError(null);
-    setPrediction(null);
+  if (!ticker) return;
+  setLoading(true);
+  setError(null);
+  setPrediction(null);
 
-    try {
-      const response = await axios.post('http://localhost:8000/predict', { ticker });
-      setPrediction(response.data.predicted_prices);
-    } catch (err) {
-      setError('Failed to fetch prediction. Is the backend running?');
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
+  try {
+    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+    const response = await axios.post(`${API_URL}/predict`, { ticker });
+    setPrediction(response.data.predicted_prices);
+  } catch (err) {
+    setError('Failed to fetch prediction. Is the backend running?');
+    console.error(err);
+  } finally {
+    setLoading(false);
+  }
+};
 
-  // 4. Handle click on a popular ticker button
   const handleTickerClick = (tickerSymbol) => {
     setTicker(tickerSymbol);
-    // Automatically trigger prediction after a tiny delay to let state update
     setTimeout(() => {
       handlePredict();
     }, 50);
